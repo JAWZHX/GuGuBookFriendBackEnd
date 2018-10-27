@@ -3,7 +3,10 @@ const app = new Koa();
 const debug = require('debug')('gugubookfriendbackend');
 const response = require('./middlewares/response')
 const bodyparser = require('koa-bodyparser')
-const config = require('./config');
+
+// 读取配置文件信息
+require('env2')('./.env')
+const {env} = process
 
 // 引入路由分发
 const router = require('./routes')
@@ -15,6 +18,6 @@ app.use(response)
 // 解析请求体
 app.use(bodyparser())
 
-app.listen(config.port, config.serverHost, () => {
-    debug(`服务器运行在http://localhost:${config.port}`);
+app.listen(env.port, env.serverHost, () => {
+    debug(`服务器运行在http://${env.serverHost}:${env.port}`);
 });
