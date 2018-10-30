@@ -8,15 +8,15 @@ const bodyparser = require('koa-bodyparser')
 require('env2')('./.env')
 const {env} = process
 
+// 解析请求体
+app.use(bodyparser())
+
 // 引入路由分发
 const router = require('./routes')
 app.use(router.routes())
 
 // 应用响应处理中间件
 app.use(response)
-
-// 解析请求体
-app.use(bodyparser())
 
 app.listen(env.port, env.serverHost, () => {
     debug(`服务器运行在http://${env.serverHost}:${env.port}`);

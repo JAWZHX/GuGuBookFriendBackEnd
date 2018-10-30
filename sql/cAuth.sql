@@ -14,6 +14,8 @@
  Date: 08/10/2017 22:22:52 PM
 */
 
+USE cauth;
+
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -23,7 +25,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `cSessionInfo`;
 CREATE TABLE `cSessionInfo` (
   `open_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `uuid` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `skey` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_visit_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
