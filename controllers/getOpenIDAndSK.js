@@ -5,22 +5,43 @@ const WXBizDataCrypt = require('../tools/WXBizDataCrypt')
 require('env2')('./.env')
 const {env} = process
 
-// 获取open_id 和 session_key
+// 创建用户
 module.exports = async(ctx, next) => {
+    // 依据标志决定要保存还是更新信息
+    console.log(ctx.query.loginState)
+    // 获取open_id 和 session_key
     const url = `https://api.weixin.qq.com/sns/jscode2session?appid=${env.AppID}&secret=${env.AppSecret}&js_code=${ctx.query.code}&grant_type=authorization_code`
     let res = await utils.GET(url)
     const skey = utils.sha1(res.data.session_key)
+    // 数据解密
     let pc = new WXBizDataCrypt(env.AppID, res.data.session_key)
     let data = pc.decryptData(ctx.query.encryptedData, ctx.query.iv)
+
+    // 表名：csessioninfo
     // open_id =======> data.openId
     // skey =======> skey
     // create_time =====> Date.now()
     // last_visit_time =====> Date.now()
     // session_key ========> res.data.session_key
     // user_info =========> ctx.query.rawData
+
     // 将数据存储到数据库
+    // 1、创建model
+    let Pet = utils.bookshelf('cauth').Model.extend({
+        tableName: 'csessioninfo'
+    })
+    // 2、添加数据
+    let rowData = {
+            'open_id': data.openId,
+            'skey': skey,
+            'session_key': res.data.session_key,
+            'user_info': ctx.query.rawData
+        }
+    let rs = await utils.addToDb(Pet, rowData)
+    // 3、返回用户信息
     ctx.state.data = {
-        Msg: '登录'
+        userInfo: rs.attributes.user_info,
+        skey: rs.attributes.skey
     }
     next()
 }
