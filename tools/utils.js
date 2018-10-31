@@ -59,9 +59,25 @@ const addToDb = (Model, data) => {
     })
 }
 
+// 向数据库更新数据
+const updateDb = (Model, data, condition) => {
+    return new Promise((resolve, reject) => {
+        new Model()
+            .where(condition)
+            .save(data, {patch: true})
+            .then((res) => {
+                resolve(res)
+            })
+            .catch((err) => {
+                reject(err)
+            })
+    })
+}
+
 module.exports = {
     GET,
     sha1,
     bookshelf,
-    addToDb
+    addToDb,
+    updateDb
 }

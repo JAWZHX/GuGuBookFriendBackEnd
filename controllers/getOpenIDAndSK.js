@@ -7,8 +7,6 @@ const {env} = process
 
 // 创建用户
 module.exports = async(ctx, next) => {
-    // 依据标志决定要保存还是更新信息
-    console.log(ctx.query.loginState)
     // 获取open_id 和 session_key
     const url = `https://api.weixin.qq.com/sns/jscode2session?appid=${env.AppID}&secret=${env.AppSecret}&js_code=${ctx.query.code}&grant_type=authorization_code`
     let res = await utils.GET(url)
@@ -30,14 +28,29 @@ module.exports = async(ctx, next) => {
     let Pet = utils.bookshelf('cauth').Model.extend({
         tableName: 'csessioninfo'
     })
-    // 2、添加数据
-    let rowData = {
+    let rs = null
+    // 条件判断(依据标志决定要保存还是更新信息)
+    if (ctx.query.loginState === 'save') {
+        // 2、添加数据
+        let rowData = {
             'open_id': data.openId,
             'skey': skey,
             'session_key': res.data.session_key,
             'user_info': ctx.query.rawData
         }
-    let rs = await utils.addToDb(Pet, rowData)
+        rs = await utils.addToDb(Pet, rowData)
+    } else {
+        let updateData = {
+            'skey': skey,
+            'session_key': res.data.session_key,
+            'user_info': ctx.query.rawData
+        }
+        let condition = {
+            'open_id': data.openId
+        }
+        rs = await utils.updateDb(Pet, updateData, condition)
+    }
+    
     // 3、返回用户信息
     ctx.state.data = {
         userInfo: rs.attributes.user_info,
