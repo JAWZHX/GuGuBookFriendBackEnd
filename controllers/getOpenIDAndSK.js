@@ -25,7 +25,7 @@ module.exports = async(ctx, next) => {
 
     // 将数据存储到数据库
     // 1、创建model
-    let Pet = utils.bookshelf('cauth').Model.extend({
+    let User = utils.bookshelf('cauth').Model.extend({
         tableName: 'csessioninfo'
     })
     let rs = null
@@ -38,7 +38,7 @@ module.exports = async(ctx, next) => {
             'session_key': res.data.session_key,
             'user_info': ctx.query.rawData
         }
-        rs = await utils.addToDb(Pet, rowData)
+        rs = await utils.addToDb(User, rowData)
     } else {
         let updateData = {
             'skey': skey,
@@ -48,7 +48,7 @@ module.exports = async(ctx, next) => {
         let condition = {
             'open_id': data.openId
         }
-        rs = await utils.updateDb(Pet, updateData, condition)
+        rs = await utils.updateDb(User, updateData, condition)
     }
     
     // 3、返回用户信息

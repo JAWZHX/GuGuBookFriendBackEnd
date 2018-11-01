@@ -20,4 +20,5 @@ app.use(response)
 
 app.listen(env.port, env.serverHost, () => {
     debug(`服务器运行在http://${env.serverHost}:${env.port}`);
+    console.log(`服务器运行在http://${env.serverHost}:${env.port}`)
 });

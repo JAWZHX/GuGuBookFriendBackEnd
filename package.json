@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --config nodemon.json index.js"
+    "dev": "nodemon --config nodemon.json index.js",
+    "start": "node index.js"
   },
   "author": "1219251709@qq.com",
   "license": "ISC",
