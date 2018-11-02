@@ -8,7 +8,7 @@ const mysql = require('mysql')
 require('env2')('../.env')
 const {env} = process
 
-// 创建数据库连接池（tip：记得更改数据库名称）
+// 创建数据库连接池
 const pool = mysql.createPool({
     host: env.mysqlHost,
     user: env.user,
