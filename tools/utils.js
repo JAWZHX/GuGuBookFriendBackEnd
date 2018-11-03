@@ -42,6 +42,8 @@ const bookshelf = (database) => {
         db = knex(config)
     }
     const bookshelf = require('bookshelf')(db)
+    // 启用分页功能（fetchPage）
+    bookshelf.plugin('pagination')
     return bookshelf
 }
 
@@ -89,6 +91,21 @@ const getOneFromDb = (Model, condition) => {
     })
 }
 
+// 查询所有记录
+const getAllFromDb = (Model, sort, order) => {
+    return new Promise((resolve, reject) => {
+        new Model()
+            .orderBy(sort, order)
+            .fetchAll()
+            .then(res => {
+                resolve(res)
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
+}
+
 // 使用豆瓣API获取图书信息（依据isbn）
 const getBookInfo = (isbn) => {
     return new Promise((resolve, reject) => {
@@ -102,6 +119,42 @@ const getBookInfo = (isbn) => {
     })
 }
 
+// 链表查询
+const linkedQuery = (Model, linked, sort, order, page = 1, pageSize = 10, condition) => {
+    return new Promise((resolve, reject) => {
+        if (condition) {
+            new Model()
+                .orderBy(sort, order)
+                .where(condition)
+                .fetchPage({
+                    pageSize,
+                    page,
+                    withRelated: [linked]
+                })
+                .then(res => {
+                    resolve(res)
+                })
+                .catch(err => {
+                    reject(err)
+                })
+        } else {
+            new Model()
+                .orderBy(sort, order)
+                .fetchPage({
+                    pageSize,
+                    page,
+                    withRelated: [linked]
+                })
+                .then(res => {
+                    resolve(res)
+                })
+                .catch(err => {
+                    reject(err)
+                })
+        }
+    })
+}
+
 module.exports = {
     GET,
     sha1,
@@ -109,5 +162,7 @@ module.exports = {
     addToDb,
     updateDb,
     getOneFromDb,
-    getBookInfo
+    getBookInfo,
+    getAllFromDb,
+    linkedQuery
 }

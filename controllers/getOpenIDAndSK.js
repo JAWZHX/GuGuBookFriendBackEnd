@@ -33,7 +33,7 @@ module.exports = async(ctx, next) => {
     if (ctx.query.loginState === 'save') {
         // 2、添加数据
         let rowData = {
-            'open_id': data.openId,
+            'openid': data.openId,
             'skey': skey,
             'session_key': res.data.session_key,
             'user_info': ctx.query.rawData
@@ -46,7 +46,7 @@ module.exports = async(ctx, next) => {
             'user_info': ctx.query.rawData
         }
         let condition = {
-            'open_id': data.openId
+            'openid': data.openId
         }
         rs = await utils.updateDb(User, updateData, condition)
     }

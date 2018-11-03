@@ -21,7 +21,7 @@ module.exports = async (ctx, next) => {
         })
         // 3、查询数据库（依据skey）（获取用户openId）
         let rs = await utils.getOneFromDb(User, { skey })
-        const openId = rs.attributes.open_id
+        const openId = rs.attributes.openid
         // 4、获取图书信息
         let rs1 = await utils.getBookInfo(ctx.request.body.isbn)
         // 5、过滤信息

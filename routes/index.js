@@ -15,8 +15,13 @@ router.post('/demo', controllers.demopost)
 // 获取open_id和session_key（登录以及保存和更新用户信息的功能）
 router.get('/getOpenIDAndSK', controllers.getOpenIDAndSK)
 
-// 获取openId
+// 存储图书信息
 router.post('/saveBook', controllers.saveBook)
 
+// 获取图书列表信息
+router.get('/booklist', controllers.booklist)
+
+// 获取图书详情信息
+router.get('/bookDetail', controllers.bookDetail)
 
 module.exports = router

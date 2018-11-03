@@ -17,5 +17,6 @@ DROP TABLE IF EXISTS `books`;
   `tags` varchar(100) DEFAULT NULL,
   `author` varchar(100) DEFAULT NULL,
   `count` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`openid`) REFERENCES csessioninfo(`openid`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
