@@ -24,4 +24,7 @@ router.get('/booklist', controllers.booklist)
 // 获取图书详情信息
 router.get('/bookDetail', controllers.bookDetail)
 
+// 获取轮播图数据
+router.get('/top', controllers.top)
+
 module.exports = router
