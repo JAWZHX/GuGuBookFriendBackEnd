@@ -27,4 +27,10 @@ router.get('/bookDetail', controllers.bookDetail)
 // 获取轮播图数据
 router.get('/top', controllers.top)
 
+// 添加评论接口
+router.post('/addcomment', controllers.addcomment)
+
+// 获取评论列表接口
+router.get('/commentlist', controllers.commentlist)
+
 module.exports = router

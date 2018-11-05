@@ -20,3 +20,16 @@ DROP TABLE IF EXISTS `books`;
   PRIMARY KEY (`id`),
   FOREIGN KEY (`openid`) REFERENCES csessioninfo(`openid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `comments`;
+
+CREATE TABLE `comments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `openid` varchar(100) NOT NULL,
+  `bookid` varchar(100) NOT NULL,
+  `comment` varchar(200) NOT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `location` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`openid`) REFERENCES csessioninfo(`openid`)
+)  ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
