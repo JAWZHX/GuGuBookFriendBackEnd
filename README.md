@@ -2,6 +2,9 @@
 
 > 基于koa、mysql、knex、bookshelf、axios
 
+# 前端界面设计
+[https://github.com/JAWZHX/GuGuBookFriendFrontEnd](https://github.com/JAWZHX/GuGuBookFriendFrontEnd "前端界面设计github地址")
+
 # 数据库表
 ```sql
 DROP TABLE IF EXISTS `csessioninfo`;
